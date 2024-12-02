@@ -13,6 +13,6 @@ exports.handler = async (event) => {
         console.log('Lambda execution completed successfully');
     } catch (error) {
         console.error('Error in Lambda function:', error);
-        throw error; // Ensure Lambda logs the error for debugging
+        throw error; // Ensure Lambda logs the error
     }
 };
