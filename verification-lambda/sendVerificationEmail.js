@@ -1,12 +1,12 @@
 // sendVerificationEmail.js
 const sgMail = require('@sendgrid/mail');
 
-// Set your SendGrid API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Store your API key in environment variables
-
 // Function to send a verification email
-const sendVerificationEmail = async ({ email, token }) => {
-    const verificationLink = `http://demo.webapp-csye.me/v1/verify?user=${encodeURIComponent(email)}&token=${token}`;
+const sendVerificationEmail = async ({ email, token, sendgridApiKey, emailFrom }) => {
+    const verificationLink = `https://demo.webapp-csye.me/v1/verify?user=${encodeURIComponent(email)}&token=${token}`;
+
+    // Set your SendGrid API key
+    sgMail.setApiKey(sendgridApiKey);
 
     const emailBody = `
         <p>Thank you for signing up! Please verify your email address by clicking the link below:</p>
@@ -16,7 +16,7 @@ const sendVerificationEmail = async ({ email, token }) => {
 
     const msg = {
         to: email, // Recipient's email
-        from: process.env.EMAIL_FROM, // Must be a verified sender in SendGrid
+        from: emailFrom, // Must be a verified sender in SendGrid
         subject: 'Verify Your Email',
         html: emailBody,
     };
